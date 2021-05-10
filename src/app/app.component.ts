@@ -7,6 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 
-  readonly eventDate = new Date(2021, 9, 1);
+  readonly eventDate = new Date('2021-09-01');
+
+  constructor() {
+    console.log(this.eventDate);
+  }
 
 }

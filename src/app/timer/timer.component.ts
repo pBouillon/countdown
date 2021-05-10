@@ -10,10 +10,13 @@ export class TimerComponent implements OnInit, OnDestroy {
 
   remainingSeconds = new BehaviorSubject<number>(0);
 
-  subscription!: Subscription;
+  subscription = new Subscription();
 
   @Input()
   to: Date = new Date();
+
+  @Input()
+  from: Date = new Date();
 
   constructor() { }
 
@@ -23,7 +26,7 @@ export class TimerComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscription = interval(1000).subscribe(_ => {
-        const millisecondsDiff = this.to.valueOf() - new Date().valueOf()
+        const millisecondsDiff = this.to.getTime() - this.from.getTime()
         const secondsDiff = Math.floor(millisecondsDiff / 1000);
         this.remainingSeconds.next(secondsDiff);
       });
