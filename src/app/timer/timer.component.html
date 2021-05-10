@@ -1,6 +1,6 @@
 <div class="container d-flex flex-column align-items-center justify-content-center"
   style="height: 100vh;">
-  <h2 class="text-center">{{ remainingSeconds | async | time }} remaining</h2>
+  <h2 class="text-center">{{ (progression | async) || 0 | time }} remaining</h2>
 
   <app-progress-bar style='width: 70%; height: 20px;'
     [progression]="(progression | async) || 0">

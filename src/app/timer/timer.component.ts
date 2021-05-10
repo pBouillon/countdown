@@ -27,7 +27,7 @@ export class TimerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.subscription = interval(1000).subscribe(_ => {
+    this.subscription = interval(1_000).subscribe(_ => {
         const remainingSeconds = this.computeRemainingTime();
         this.remainingSeconds.next(remainingSeconds);
 
@@ -54,4 +54,5 @@ export class TimerComponent implements OnInit, OnDestroy {
 
     return secondsDiff;
   }
+
 }
