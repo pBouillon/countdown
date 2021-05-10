@@ -9,4 +9,6 @@ export class AppComponent {
 
   readonly eventDate = new Date('2021-09-01');
 
+  readonly startingDate = new Date('2019-09-01');
+
 }

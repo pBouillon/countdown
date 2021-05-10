@@ -37,14 +37,14 @@ export class TimerComponent implements OnInit, OnDestroy {
   }
 
   private computeRemainingProgress(decimals = 2): number {
-    const totalSeconds = Math.floor((this.to.valueOf() - this.from.valueOf()) / 1_000);
-    const remainingSeconds = this.remainingSeconds.value;
+    const completeDurationSeconds = Math.floor((this.to.valueOf() - this.from.valueOf()) / 1_000);
+    const elapsedSeconds = completeDurationSeconds - this.remainingSeconds.value;
 
-    let currentProgression = 100 * remainingSeconds / totalSeconds;
-
+    let currentProgression = 100 * elapsedSeconds / completeDurationSeconds;
     if (currentProgression > 100) currentProgression = 100;
 
-    const truncated = Math.floor(currentProgression * Math.pow(10, decimals)) / Math.pow(10, decimals);
+    const roundingCoefficient = Math.pow(10, decimals);
+    const truncated = Math.floor(currentProgression * roundingCoefficient) / roundingCoefficient;
     return truncated;
   }
 
