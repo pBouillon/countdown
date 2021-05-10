@@ -1,27 +1,32 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { BehaviorSubject, interval, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-timer',
   templateUrl: './timer.component.html',
   styleUrls: ['./timer.component.scss']
 })
-export class TimerComponent implements OnInit {
+export class TimerComponent implements OnInit, OnDestroy {
 
-  @Input()
-  from: Date = new Date();
+  remainingSeconds = new BehaviorSubject<number>(0);
+
+  subscription!: Subscription;
 
   @Input()
   to: Date = new Date();
 
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
-  get remainingSeconds(): number {
-    const millisecondsDiff = this.to.valueOf() - this.from.valueOf()
-    const secondsDiff = Math.floor(millisecondsDiff / 1000);
-    return secondsDiff;
+  ngOnInit(): void {
+    this.subscription = interval(1000).subscribe(_ => {
+        const millisecondsDiff = this.to.valueOf() - new Date().valueOf()
+        const secondsDiff = Math.floor(millisecondsDiff / 1000);
+        this.remainingSeconds.next(secondsDiff);
+      });
   }
 
 }
