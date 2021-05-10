@@ -15,9 +15,6 @@ export class TimerComponent implements OnInit, OnDestroy {
   @Input()
   to: Date = new Date();
 
-  @Input()
-  from: Date = new Date();
-
   constructor() { }
 
   ngOnDestroy(): void {
@@ -26,7 +23,7 @@ export class TimerComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscription = interval(1000).subscribe(_ => {
-        const millisecondsDiff = this.to.getTime() - this.from.getTime()
+        const millisecondsDiff = this.to.valueOf() - new Date().valueOf()
         const secondsDiff = Math.floor(millisecondsDiff / 1000);
         this.remainingSeconds.next(secondsDiff);
       });

@@ -17,7 +17,11 @@ export class TimePipe implements PipeTransform {
     let days = Math.floor(hours / 24);
     hours %= 24;
 
-    return days + ' d ' + hours + ' h ' + minutes + ' mn ' + seconds + ' sc';
+    return days + ' day' + (days > 1 ? 's' : '') + ' '
+      + hours + ' hour' + (hours > 1 ? 's' : '') + ' '
+      + minutes + ' minute' + (minutes > 1 ? 's' : '') + ' '
+      + ' and '
+      + seconds + ' second' + (seconds > 1 ? 's' : '');
   }
 
 }
