@@ -6,5 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'countdown';
+
+  readonly eventDate = new Date(2021, 9, 1);
+
 }
