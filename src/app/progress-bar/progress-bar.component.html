@@ -2,6 +2,8 @@
   <div class="progress-bar progress-bar-striped progress-bar-animated"
     role="progressbar"
     [style.width]="progression + '%'">
-    {{ progression }} %
+    <span *ngIf="showProgression">
+      {{ progression }} %
+    </span>
   </div>
 </div>

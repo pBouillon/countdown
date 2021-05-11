@@ -5,8 +5,17 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class TimePipe implements PipeTransform {
 
+  /**
+   * Format a number of second to a human readable sentence
+   * @param value Number of seconds from which the time will be evaluated
+   * @returns A sentence with the formatted time in a human readable format
+   */
   transform(value: number | null): string {
     let seconds = value ?? 0;
+
+    if (seconds < 0) {
+      throw new Error('The number of seconds should be equal or greater than 0');
+    }
 
     let minutes = Math.floor(seconds / 60);
     seconds %= 60;
