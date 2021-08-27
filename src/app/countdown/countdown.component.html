@@ -1,5 +1,7 @@
-<div class="container d-flex flex-column align-items-center justify-content-center"
-  style="height: 100vh;">
+<div *ngIf="!(isDeadlineMet | async); else deadlineMet"
+  class="container d-flex flex-column align-items-center justify-content-center"
+  style="height: 100vh;"
+>
   <h2 class="text-center">{{ remainingSeconds | async | time }} remaining</h2>
 
   <app-progress-bar *ngIf="showProgress"
@@ -9,3 +11,16 @@
 
   <p class="small text-muted text-center">From {{ from | date:'short' }} to {{ to | date:'short' }}</p>
 </div>
+
+<ng-template #deadlineMet>
+  <div
+    class="container d-flex flex-column align-items-center justify-content-center"
+    style="height: 100vh;"
+  >
+    <h2 class="text-center">
+      The deadline is has been met since
+      {{ (remainingSeconds | async)! * -1 | time }}
+    </h2>
+    <p class="fs-1">🥳</p>
+  </div>
+</ng-template>

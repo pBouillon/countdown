@@ -31,6 +31,11 @@ export class CountdownComponent implements OnInit, OnDestroy {
   to = new Date();
 
   /**
+   * Whether or not the deadline has been met
+   */
+  isDeadlineMet = new BehaviorSubject<boolean>(false);
+
+  /**
    * Current progression, in percentages
    */
   progression = new BehaviorSubject<number>(0);
@@ -50,16 +55,24 @@ export class CountdownComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    if (this.from.getTime() > this.to.getTime()) {
-      throw new Error('The timer\'s deadline must be later than it\'s beginning');
+    if (this.isDeadlineMet.getValue()) {
+      return;
     }
 
     this.subscription = timer(0, 1_000).subscribe(_ => {
         const remainingSeconds = this.computeRemainingTime();
         this.remainingSeconds.next(remainingSeconds);
 
+        const isDeadlineMet = remainingSeconds < 0
+        this.isDeadlineMet.next(isDeadlineMet);
+
+        if (isDeadlineMet) {
+          return;
+        }
+
         const currentProgress = this.computeProgression();
         this.progression.next(currentProgress);
+
       });
   }
 
