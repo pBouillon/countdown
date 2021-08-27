@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { BehaviorSubject, interval, Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription, timer } from 'rxjs';
 
 /**
  * Display a countdown from a date to another (number of days, hours, etc.)
@@ -54,7 +54,7 @@ export class CountdownComponent implements OnInit, OnDestroy {
       throw new Error('The timer\'s deadline must be later than it\'s beginning');
     }
 
-    this.subscription = interval(1_000).subscribe(_ => {
+    this.subscription = timer(0, 1_000).subscribe(_ => {
         const remainingSeconds = this.computeRemainingTime();
         this.remainingSeconds.next(remainingSeconds);
 
@@ -82,6 +82,7 @@ export class CountdownComponent implements OnInit, OnDestroy {
 
     const roundingCoefficient = Math.pow(10, decimals);
     const truncated = Math.floor(currentProgression * roundingCoefficient) / roundingCoefficient;
+
     return truncated;
   }
 
